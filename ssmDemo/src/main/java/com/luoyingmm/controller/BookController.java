@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,37 +40,7 @@ public class BookController {
     }
 
     @RequestMapping("/toUpdate")
-    public String toUpdatePager(int id,Model model){
-        Books books = bookService.queryBookById(id);
-        model.addAttribute("QBooks",books);
+    public String toUpdate(){
         return "updateBook";
-    }
-
-    @RequestMapping("/update")
-    public String updateBooks(Books books,Model model){
-        System.out.println(books);
-        bookService.updateBook(books);
-        return "redirect:/book/allBook";
-    }
-
-    @RequestMapping("deleteBook/{bookId}")
-    public String deleteBook(@PathVariable("bookId")int id){
-        bookService.deleteBookById(id);
-        return "redirect:/book/allBook";
-    }
-
-    @RequestMapping("/queryBook")
-    public String queryBook(String queryBookName,Model model){
-        Books books = bookService.queryBookByName(queryBookName);
-        List<Books> list = new ArrayList<>();
-        System.err.println(books);
-        list.add(books);
-
-        if (books == null){
-            list = bookService.queryAllBook();
-            model.addAttribute("error","未查到");
-        }
-        model.addAttribute("list",list);
-        return "allBook";
     }
 }
